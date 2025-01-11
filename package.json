@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "Simple e-commerce app for books.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "test": "cross-env Node_ENV=test powershell -File ./testScript.ps1",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "lint:check": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:check": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -28,17 +28,26 @@
   },
   "homepage": "https://github.com/Ahmed101Mohammed/book-ecommerce-app-backend#readme",
   "dependencies": {
+    "@phc/argon2": "^1.0.9",
+    "cookie-parser": "^1.4.7",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
-    "mongoose": "^8.9.0"
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.0",
+    "upash": "^1.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.13.0",
     "nodemon": "^3.1.9",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "supertest": "^7.0.0"
   }
 }
