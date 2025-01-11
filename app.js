@@ -1,14 +1,23 @@
-require('express-async-errors')
-const express = require('express')
-const path = require('node:path')
-const apstractPath = require(path.join(__dirname, 'utils', 'apstractPath.js'))
-const logsHandler = require(apstractPath('middlewares', 'logsHandler.js'))
-const errorHandler = require(apstractPath('middlewares', 'errorHandler.js'))
+import 'express-async-errors'
+import express from 'express'
+import logsHandler from './middlewares/logsHandler.js'
+import errorHandler from './middlewares/errorHandler.js'
+import authRouter from './routes/auth.js'
+import connectToDB from './dbConnection.js'
+import cookieParser from 'cookie-parser'
+
+connectToDB()
 const app = express()
 // Middlewares
+app.use(cookieParser())
 app.use(express.json())
 app.use(logsHandler)
+app.use(express.static('dist'))
+
+// Routers
+app.use('/auth', authRouter)
 
 // Midlewares for wrongs
 app.use(errorHandler)
-module.exports = app
+
+export default app

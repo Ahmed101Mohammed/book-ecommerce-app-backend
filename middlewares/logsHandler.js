@@ -1,8 +1,5 @@
-const path = require('node:path')
-const apstractPath = require(
-  path.join(__dirname, '..', 'utils', 'apstractPath.js')
-)
-const logger = require(apstractPath('utils', 'logger.js'))
+import logger from "../utils/logger.js"
+
 const logsHandler = (request, response, next) => {
   const method = request.method
   const url = request.url
@@ -12,4 +9,4 @@ const logsHandler = (request, response, next) => {
   next()
 }
 
-module.exports = logsHandler
+export default logsHandler

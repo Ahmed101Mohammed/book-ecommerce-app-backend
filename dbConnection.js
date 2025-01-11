@@ -1,11 +1,9 @@
-const mongoose = require('mongoose')
-const path = require('node:path')
-const apstractPath = require(path.join(__dirname, 'utils', 'apstractPath.js'))
-const proccessVars = require(apstractPath('utils', 'confige.js'))
-const logger = require(apstractPath('utils', 'logger.js'))
+import mongoose from "mongoose"
+import proccessVars from './utils/confige.js'
+import logger from "./utils/logger.js"
 const connectToDB = async () => {
   try {
-    await mongoose.connect(proccessVars.DEV_MONGO_DB_URI)
+    await mongoose.connect(proccessVars.MONGO_DB_URI)
     logger.info('Successfully connection to the db')
   } catch (error) {
     const name = error.name
@@ -23,4 +21,4 @@ const connectToDB = async () => {
   }
 }
 
-module.exports = connectToDB
+export default connectToDB

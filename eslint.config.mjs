@@ -6,7 +6,7 @@ export default [
   {
     files: ['**/*.js'],
     languageOptions: {
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: {
         ...globals.browser,
       },
@@ -14,7 +14,7 @@ export default [
     rules: {
       ...pluginJs.configs.recommended.rules,
       'no-undef': 'off',
+      'no-unused-vars': 'off'
     },
   },
-  // { languageOptions: { globals: globals.browser } },
 ]

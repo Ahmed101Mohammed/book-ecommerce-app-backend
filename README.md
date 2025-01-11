@@ -15,11 +15,17 @@ It's a simple backend of an e-commerce app for books.
   - [X] Initial logs middleware.
   - [X] Setup loggers.
 
-- [ ] **Authentication System**
+- [X] **Authentication System**
 
-  - Implement user registration and login endpoints.
-  - Use JWT for token-based authentication.
-  - Add role-based access control (e.g., admin vs user).
+  - [X] Design user schema including role-based access control (e.g., admin vs user).
+  - [X] Implement user registration endpoint.
+  - [X] Implement user login endpoint.
+  - [X] Use JWT for token-based authentication.
+  - [X] Implement user logout endpoint.
+  - [X] Document all endpoints in postman.
+  - [X] Make an integrational tests for user registration endpoint. 
+  - [X] Make an integrational tests for user login endpoint. 
+  - [X] Make an integrational tests for user logout endpoint. 
 
 - [ ] **Box Management**
 
