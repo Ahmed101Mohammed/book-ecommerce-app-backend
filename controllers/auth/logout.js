@@ -29,7 +29,7 @@ const logout = async(request, response) =>
   await newBlockedAccessToken.save()
 
   // send a response
-  response.status(204).end()
+  response.status(204).json({state: true}).end()
 }
 
 export default logout

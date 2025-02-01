@@ -27,10 +27,10 @@ It's a simple backend of an e-commerce app for books.
   - [X] Make an integrational tests for user login endpoint. 
   - [X] Make an integrational tests for user logout endpoint. 
 
-- [ ] **Box Management**
+- [X] **Box Management**
 
-  - Create CRUD (Create, Read, Update, Delete) endpoints for boxes.
-  - Validate incoming data (e.g., box name, price, and stock).
+  - [X] Create CRUD (Create, Read, Update, Delete) endpoints for boxes.
+  - [X] Validate incoming data (e.g., box name, price, and stock).
 
 - [ ] **Shopping Cart**
 

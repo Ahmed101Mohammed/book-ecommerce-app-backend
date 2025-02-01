@@ -61,7 +61,7 @@ const loginController = async(request, response, next) =>
   response.cookie('jwt', refreachToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 5 * 1000})
 
   // Respond with true status
-  return response.status(200).json({accessToken}).end()
+  return response.status(200).json({state: true ,accessToken}).end()
 }
 
 export default loginController
