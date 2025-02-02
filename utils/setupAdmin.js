@@ -1,23 +1,20 @@
-import Joi from 'joi'
-import upash from 'upash'
-import argon2 from '@phc/argon2'
-import cryptoMethods from '../../utils/cryptoMethods.js'
-import User from '../../models/User.js'
-import rolesConstants from '../../utils/rolesConstants.js'
-upash.install('argon2', argon2)
+import User from "../models/User.js"
+import Joi from "joi"
+import proccessVars from "./confige.js"
+import logger from "./logger.js"
+import cryptoMethods from "./cryptoMethods.js"
+import upash from "upash"
+import rolesConstants from "./rolesConstants.js"
 
-const registerController = async (request, response, next) =>
+
+const setupAdmin = async() =>
 {
-  // extract needed data
-  const registerData = request.body
-  const { name, email, password } = registerData
-
   // validate data Step 1: Data required is exist with its accepted form.
   const schema = Joi.object(
     {
       name: Joi.string()
-        .min(5)
-        .max(15)
+      .min(5)
+      .max(15)
         .required(),
         email: Joi.string()
           .email()
@@ -25,36 +22,38 @@ const registerController = async (request, response, next) =>
           .max(100)
           .required(),
         password: Joi.string()
-          .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'), 
-            'pattern for strong password. Sure the password lenght is more than 7, and it contain at least one (Lower & Upper & special charcters And one digit)')
+        .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'), 
+        'pattern for strong password. Sure the password lenght is more than 7, and it contain at least one (Lower & Upper & special charcters And one digit)')
           .min(9)
           .max(30)
           .required()
-    }
+        }
   )
-
-  const validationResponse = await schema.validate({name, email, password})
+  
+  const admin = proccessVars.ADMIN_USER
+  const validationResponse = await schema.validate({name: admin.NAME, email: admin.EMAIL, password: admin.PASSWORD})
   if(validationResponse.error)
   {
-    return next(validationResponse.error)
+    return logger.error(`Error-> ${validationResponse.error}`)
   }
   const validData = validationResponse.value
-
+  
   // validate data step 2: email is not dublicated
   const hashEmail = cryptoMethods.hashData(validData.email)
   const dublicatedEmail = await User.findOne({hash_email: hashEmail})
   if(dublicatedEmail)
   {
-    return next({name: 'DublicatedData', message: 'The email is already registered before.'})
+    console.log(`Admin is already exist`)
+    return
   }
-  
+
   // Encrypt password
   const hashedPassword = await upash.hash(validData.password)
-  
+
   // Encrypt other data
   const encryptedName = cryptoMethods.encryptData(validData.name)
   const encryptedEmail = cryptoMethods.encryptData(validData.email)
-  const encryptedRole = cryptoMethods.encryptData(rolesConstants.USER)
+  const encryptedRole = cryptoMethods.encryptData(rolesConstants.ADMIN)
 
   // Create user
   const newUser = new User({
@@ -75,11 +74,8 @@ const registerController = async (request, response, next) =>
   })
 
   await newUser.save()
-  response.status(201).json({state: true}).end()
-
-  // for testing
-  // const users = await User.find({})
-  // console.log(users.length)
+  console.log(`Admin created successfuly`)
 }
 
-export default registerController
+
+export default setupAdmin

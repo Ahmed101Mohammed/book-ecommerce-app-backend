@@ -1,10 +1,12 @@
 import mongoose from "mongoose"
 import proccessVars from './utils/confige.js'
 import logger from "./utils/logger.js"
+import setupAdmin from "./utils/setupAdmin.js"
 const connectToDB = async () => {
   try {
     await mongoose.connect(proccessVars.MONGO_DB_URI)
     logger.info('Successfully connection to the db')
+    await setupAdmin()
   } catch (error) {
     const name = error.name
     const message = error.message

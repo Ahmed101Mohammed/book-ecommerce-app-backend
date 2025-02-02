@@ -1,13 +1,17 @@
-import { test, after, describe, beforeEach } from 'node:test'
+import { test, after, describe, beforeEach, before } from 'node:test'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../../../app.js'
 import User from '../../../models/User.js'
 import authHelperFunctions from './helper.js'
 import assert from 'node:assert'
+import connectToDB from '../../../dbConnection.js'
 
 const api = supertest(app)
-
+before( async () =>
+{
+  await connectToDB()
+})
 beforeEach(async ()=> 
 {
   await User.deleteMany({})

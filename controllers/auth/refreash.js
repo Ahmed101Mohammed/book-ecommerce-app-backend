@@ -29,7 +29,7 @@ const refreash = async(request, response, next) =>
     const {id} = decoded
     console.log({id})
     const accessToken = jwt.sign({id}, proccessVars.ACCESS_TOKEN, {expiresIn: '2m'})
-    return response.status(201).json({accessToken}).end()
+    return response.status(201).json({state: true, accessToken}).end()
   }
   catch(e)
   {
